@@ -1,0 +1,42 @@
+{% extends "accounts/base.html" %}
+{% block title %}Dashboard Admin{% endblock %}
+{% block content %}
+<div class="card">
+    <h1>Dashboard Admin</h1>
+    <p style="color:#94a3b8;">Halaman ini cuma bisa diakses role <b>admin</b>. Role lain otomatis diarahkan ke halaman akses ditolak.</p>
+</div>
+
+<div class="card">
+    <h2>📋 Log Aktivitas Terbaru</h2>
+    <table>
+        <tr><th>Waktu</th><th>User</th><th>Aksi</th><th>IP</th></tr>
+        {% for log in log_terbaru %}
+        <tr>
+            <td>{{ log.waktu|date:"d/m/Y H:i:s" }}</td>
+            <td>{{ log.user.username|default:"-" }}</td>
+            <td>{{ log.aksi }}</td>
+            <td>{{ log.ip_address|default:"-" }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">Belum ada log.</td></tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div class="card">
+    <h2>🚫 Percobaan Login Gagal Terbaru</h2>
+    <table>
+        <tr><th>Waktu</th><th>Username</th><th>IP</th><th>Status</th></tr>
+        {% for p in percobaan_gagal %}
+        <tr>
+            <td>{{ p.waktu|date:"d/m/Y H:i:s" }}</td>
+            <td>{{ p.username }}</td>
+            <td>{{ p.ip_address|default:"-" }}</td>
+            <td class="fail">Gagal</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">Belum ada percobaan gagal.</td></tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

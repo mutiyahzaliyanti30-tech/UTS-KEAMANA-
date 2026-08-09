@@ -1,0 +1,30 @@
+{% extends "accounts/base.html" %}
+{% block title %}Login - Secure Auth{% endblock %}
+{% block content %}
+<div class="card" style="max-width: 380px; margin: 60px auto;">
+    <h1>Masuk ke Sistem</h1>
+    <h2 style="margin-top:-8px;">Login dengan Role-Based Access Control</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div style="margin-bottom: 14px;">
+            <label style="font-size:13px; color:#94a3b8;">Username</label><br>
+            <input type="text" name="username" required autofocus
+                   style="width:100%; padding:9px; border-radius:6px; border:1px solid #334155; background:#0f172a; color:#e2e8f0; margin-top:4px;">
+        </div>
+        <div style="margin-bottom: 18px;">
+            <label style="font-size:13px; color:#94a3b8;">Password</label><br>
+            <input type="password" name="password" required
+                   style="width:100%; padding:9px; border-radius:6px; border:1px solid #334155; background:#0f172a; color:#e2e8f0; margin-top:4px;">
+        </div>
+        <button type="submit" class="btn" style="width:100%;">Login</button>
+    </form>
+
+    <p style="font-size:12px; color:#64748b; margin-top:18px;">
+        Akun demo: <br>
+        admin_demo / AdminAman123!<br>
+        staff_demo / StaffAman123!<br>
+        user_demo / UserAman123!
+    </p>
+</div>
+{% endblock %}

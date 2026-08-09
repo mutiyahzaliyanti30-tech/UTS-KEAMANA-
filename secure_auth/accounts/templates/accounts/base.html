@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Secure Auth{% endblock %}</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+        nav {
+            background: #1e293b;
+            padding: 14px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+        }
+        nav .brand { font-weight: 700; color: #38bdf8; letter-spacing: 0.5px; }
+        nav a {
+            color: #cbd5e1;
+            text-decoration: none;
+            margin-left: 18px;
+            font-size: 14px;
+        }
+        nav a:hover { color: #38bdf8; }
+        .role-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 12px;
+        }
+        .role-admin { background: #7f1d1d; color: #fecaca; }
+        .role-staff { background: #78350f; color: #fde68a; }
+        .role-user  { background: #14532d; color: #bbf7d0; }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 20px;
+        }
+        h1 { font-size: 22px; margin-top: 0; }
+        h2 { font-size: 17px; color: #94a3b8; }
+        .messages { list-style: none; padding: 0; margin: 0 0 16px 0; }
+        .messages li {
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .messages .success { background: #14532d; color: #bbf7d0; }
+        .messages .error { background: #7f1d1d; color: #fecaca; }
+        .messages .info { background: #1e3a5f; color: #bae6fd; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #334155; }
+        th { color: #94a3b8; font-weight: 600; }
+        .ok { color: #4ade80; }
+        .fail { color: #f87171; }
+
+        .btn {
+            display: inline-block;
+            background: #38bdf8;
+            color: #0f172a;
+            padding: 9px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover { background: #7dd3fc; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="brand">🔐 Secure Auth System</div>
+        <div>
+            {% if user.is_authenticated %}
+                <span>{{ user.username }}</span>
+                {% with role=user.profile.role %}
+                    {% if role == "admin" %}<span class="role-badge role-admin">ADMIN</span>{% endif %}
+                    {% if role == "staff" %}<span class="role-badge role-staff">STAFF</span>{% endif %}
+                    {% if role == "user" %}<span class="role-badge role-user">USER</span>{% endif %}
+                {% endwith %}
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

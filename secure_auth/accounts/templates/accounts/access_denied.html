@@ -1,0 +1,9 @@
+{% extends "accounts/base.html" %}
+{% block title %}Akses Ditolak{% endblock %}
+{% block content %}
+<div class="card" style="text-align:center;">
+    <h1 style="color:#f87171;">⛔ Akses Ditolak</h1>
+    <p style="color:#94a3b8;">Role kamu tidak punya izin untuk membuka halaman ini.</p>
+    <a href="{% url 'dashboard' %}" class="btn">Kembali ke Dashboard</a>
+</div>
+{% endblock %}
